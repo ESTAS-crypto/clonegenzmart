@@ -200,10 +200,24 @@ html {
     background-color: #fff;
     color: var(--bg);
     transition: 0.5s;
+    display: flex;
+    flex-direction: column;
 }
 
 .shopping-cart.active {
     right: 0;
+}
+
+
+/* Add a container for scrollable content */
+
+.shopping-cart-items {
+    flex: 1;
+    overflow-y: auto;
+    max-height: calc(100vh - 15rem);
+    /* Adjust based on header/footer height */
+    padding-right: 1rem;
+    /* Add padding for scrollbar */
 }
 
 .shopping-cart .cart-items {
@@ -245,6 +259,37 @@ html {
     font-size: 1.6rem;
     margin-top: -1rem;
     text-align: center;
+}
+
+
+/* Style the scrollbar for better appearance */
+
+.shopping-cart-items::-webkit-scrollbar {
+    width: 8px;
+}
+
+.shopping-cart-items::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.shopping-cart-items::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.shopping-cart-items::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+
+/* Keep the checkout form visible */
+
+.form-container {
+    margin-top: auto;
+    padding: 1rem 0;
+    background-color: #fff;
+    border-top: 1px solid #eee;
 }
 
 
@@ -919,13 +964,37 @@ footer .credit a {
     .dropdown {
         width: 30rem;
     }
-    #partikel-js,
-    #par-js,
-    #par1-js,
+    #partikel-js {
+        position: absolute;
+        width: 100%;
+        height: 90%;
+        background-color: #000000;
+        z-index: -1;
+        overflow: hidden;
+        /* Prevent scrolling issues */
+    }
+    #par-js {
+        position: absolute;
+        width: 100%;
+        height: 160%;
+        background-color: #000000;
+        z-index: -1;
+        overflow: hidden;
+        /* Prevent scrolling issues */
+    }
+    #par1-js {
+        position: absolute;
+        width: 100%;
+        height: 515%;
+        background-color: #000000;
+        z-index: -1;
+        overflow: hidden;
+        /* Prevent scrolling issues */
+    }
     #par2-js {
         position: absolute;
         width: 100%;
-        height: 710%;
+        height: 515%;
         background-color: #000000;
         z-index: -1;
         overflow: hidden;
@@ -934,7 +1003,7 @@ footer .credit a {
     #par3-js {
         position: absolute;
         width: 100%;
-        height: 80%;
+        height: 70%;
         background-color: #000000;
         z-index: -1;
         overflow: hidden;
@@ -961,11 +1030,14 @@ footer .credit a {
 }
 
 @media (max-width: 576px) {
+    .navbar .navbar-nav {
+        width: 30rem;
+    }
     .navbar .navbar-logo {
         font-size: 1.5rem;
     }
     .navbar .navbar-nav a {
-        font-size: 0.9rem;
+        font-size: 2.2rem;
     }
     .hero .content h1 {
         font-size: 2rem;
@@ -989,6 +1061,6 @@ footer .credit a {
 
 @media (max-width: 450px) {
     html {
-        font-size: 55%;
+        font-size: 66%;
     }
 }
