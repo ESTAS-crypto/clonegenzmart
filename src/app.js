@@ -14,52 +14,70 @@ document.addEventListener("alpine:init", () => {
                         modal.querySelector(".modal-container").appendChild(modalContent);
                     }
 
+                    // Determine which menu category the item belongs to
+                    const getImagePath = (item) => {
+                        // Check item ID ranges to determine the correct folder
+                        if (item.id <= 6) {
+                            return `img/menu0/${item.img}`;
+                        } else if (item.id <= 12) {
+                            return `img/menu2/${item.img}`;
+                        } else {
+                            return `img/menu3/${item.img}`;
+                        }
+                    };
+
                     modalContent.innerHTML = `
-<img src="img/menu/${item.img}" alt=""/>
-<img src="img/menu2/${item.img}" alt=""/>
-<img src="img/menu3/${item.img}" alt=""/>
-<div class="product-content">
-<h3>${item.name}</h3>
-<p>${item.description}</p>
-<div class="product-stars">
-  ${Array(5).fill().map((_, i) => `
-    <svg width="24" height="24" fill="${i < 5 ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <use href="img/feather-sprite.svg#star" />
-    </svg>
-  `).join("")}
-</div>
-<div class="menu-card-price">${rupiah(item.price)}</div>
-<a href="#" class="add-to-cart-button">
-  <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <use href="img/feather-sprite.svg#shopping-cart" />
-  </svg>
-  <span>Add to cart</span>
-</a>
-</div>
-`;
+          <img src="${getImagePath(item)}" alt="${item.name}"/>
+          <div class="product-content">
+              <h3>${item.name}</h3>
+              <p>${item.description}</p>
+              <div class="product-stars">
+                  ${Array(5).fill().map((_, i) => `
+                      <svg width="24" height="24" fill="${i < 5 ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <use href="img/feather-sprite.svg#star" />
+                      </svg>
+                  `).join("")}
+              </div>
+              <div class="menu-card-price">${rupiah(item.price)}</div>
+              <a href="#" class="add-to-cart-button">
+                  <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <use href="img/feather-sprite.svg#shopping-cart" />
+                  </svg>
+                  <span>Add to cart</span>
+              </a>
+          </div>
+      `;
 
-modal.style.display = "flex";
+      modal.style.display = "flex";
 
-// Add event listener for Add to Cart button
-const addToCartButton = modalContent.querySelector('.add-to-cart-button');
-addToCartButton.addEventListener('click', (e) => {
-e.preventDefault();
-Alpine.store('cart').add(item);
-});
-};
+      // Add event listener for Add to Cart button
+      const addToCartButton = modalContent.querySelector('.add-to-cart-button');
+      addToCartButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          Alpine.store('cart').add(item);
+          modal.style.display = "none"; // Close modal after adding to cart
+      });
 
+      // Add close modal functionality
+      const closeButton = modal.querySelector('.close-icon');
+      closeButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          modal.style.display = "none";
+      });
+  };
 
-Alpine.data("menu", () => ({
-items: [
-{ id: 1, name: "Midnight", img: "1.jpg", price: 45000, description: "a" },
-{ id: 2, name: "Cocoa", img: "2.jpg", price: 19000, description: "Minuman cokelat lembut yang menghangatkan hati dan pikiran." },
-{ id: 3, name: "Americano", img: "3.jpg", price: 20000, description: "Espresso klasik yang diencerkan dengan air panas, memberikan cita rasa kopi yang kuat namun ringan." },
-{ id: 4, name: "Cap", img: "4.jpg", price: 18000, description: "Perpaduan sempurna antara espresso, susu steamed, dan foam susu yang lembut." },
-{ id: 5, name: "Caramel", img: "5.jpg", price: 25000, description: "Latte manis dengan sentuhan karamel yang memanjakan lidah." },
-{ id: 6, name: "Mocha", img: "6.jpg", price: 40000, description: "Kombinasi harmonis antara espresso, cokelat, dan susu untuk pencinta kopi dan cokelat." },
-],
-showItemDetails
-}));
+  // Rest of the Alpine.js code remains the same
+  Alpine.data("menu", () => ({
+      items: [
+          { id: 1, name: "Midnight", img: "1.jpg", price: 45000, description: "a" },
+          { id: 2, name: "Cocoa", img: "2.jpg", price: 19000, description: "Minuman cokelat lembut yang menghangatkan hati dan pikiran." },
+          { id: 3, name: "Americano", img: "3.jpg", price: 20000, description: "Espresso klasik yang diencerkan dengan air panas, memberikan cita rasa kopi yang kuat namun ringan." },
+          { id: 4, name: "Cap", img: "4.jpg", price: 18000, description: "Perpaduan sempurna antara espresso, susu steamed, dan foam susu yang lembut." },
+          { id: 5, name: "Caramel", img: "5.jpg", price: 25000, description: "Latte manis dengan sentuhan karamel yang memanjakan lidah." },
+          { id: 6, name: "Mocha", img: "6.jpg", price: 40000, description: "Kombinasi harmonis antara espresso, cokelat, dan susu untuk pencinta kopi dan cokelat." },
+      ],
+      showItemDetails
+  }));
 
 Alpine.data("menu2", () => ({
 items: [
